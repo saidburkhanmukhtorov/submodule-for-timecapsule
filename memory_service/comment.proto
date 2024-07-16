@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "genproto/memory";
+
+package memory;
+
+// Comment represents a comment on a memory.
+message Comment {
+  string id = 1;
+  string memory_id = 2;
+  string user_id = 3;
+  string content = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+// GetCommentByIdRequest represents a request to retrieve a comment by its ID.
+message GetCommentByIdRequest {
+  string id = 1;
+}
+
+// DeleteCommentRequest represents a request to delete a comment by its ID.
+message DeleteCommentRequest {
+  string id = 1;
+}
+
+// DeleteCommentResponse represents a response to a comment deletion request.
+message DeleteCommentResponse {
+  bool success = 1;
+}
+
+// GetAllCommentsRequest represents a request to retrieve all comments.
+message GetAllCommentsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string memory_id = 3; // Filter by memory ID
+  string user_id = 4; // Filter by user ID
+  string content = 5; // Filter by content
+}
+
+// GetAllCommentsResponse represents a response containing a list of comments.
+message GetAllCommentsResponse {
+  repeated Comment comments = 1;
+  int32 count = 2;
+}
+
+service CommentService {
+  rpc GetCommentById(GetCommentByIdRequest) returns (Comment);
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse);
+  rpc GetAllComments(GetAllCommentsRequest) returns (GetAllCommentsResponse);
+}

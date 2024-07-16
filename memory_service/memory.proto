@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option go_package = "genproto/memory";
+
+package memory;
+
+// Memory represents a single memory entry.
+message Memory {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  string description = 4;
+  string date = 5;
+  repeated string tags = 6;
+  double latitude = 7;
+  double longitude = 8;
+  string place_name = 9;
+  string privacy = 10;
+  string created_at = 11;
+  string updated_at = 12;
+}
+
+// GetMemoryByIdRequest represents a request to retrieve a memory by its ID.
+message GetMemoryByIdRequest {
+  string id = 1;
+}
+
+// DeleteMemoryRequest represents a request to delete a memory by its ID.
+message DeleteMemoryRequest {
+  string id = 1;
+}
+
+// DeleteMemoryResponse represents a response to a memory deletion request.
+message DeleteMemoryResponse {
+  bool success = 1;
+}
+
+// GetAllMemoriesRequest represents a request to retrieve all memories.
+message GetAllMemoriesRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string search_term = 3; // Search by title, description, or tags
+  repeated string tags = 4; // Filter by multiple tags
+  string start_date = 5; // Filter by start date (inclusive)
+  string end_date = 6; // Filter by end date (inclusive)
+  string user_id = 7; // Filter by user ID
+  string title = 8; // Filter by title
+  string description = 9; // Filter by description
+  double latitude = 10; // Filter by latitude
+  double longitude = 11; // Filter by longitude
+  string place_name = 12; // Filter by place name
+  string privacy = 13; // Filter by privacy setting
+}
+
+// GetAllMemoriesResponse represents a response containing a list of memories.
+message GetAllMemoriesResponse {
+  repeated Memory memories = 1;
+  int32 count = 2;
+}
+
+service MemoryService {
+  rpc GetMemoryById(GetMemoryByIdRequest) returns (Memory);
+  rpc DeleteMemory(DeleteMemoryRequest) returns (DeleteMemoryResponse);
+  rpc GetAllMemories(GetAllMemoriesRequest) returns (GetAllMemoriesResponse);
+}

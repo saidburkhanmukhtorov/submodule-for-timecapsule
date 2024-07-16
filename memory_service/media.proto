@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option go_package = "genproto/memory";
+
+package memory;
+
+// Media represents a media file associated with a memory.
+message Media {
+  string id = 1;
+  string memory_id = 2;
+  string type = 3;
+  string url = 4;
+  string created_at = 5;
+}
+
+// GetMediaByIdRequest represents a request to retrieve media by its ID.
+message GetMediaByIdRequest {
+  string id = 1;
+}
+
+// DeleteMediaRequest represents a request to delete media by its ID.
+message DeleteMediaRequest {
+  string id = 1;
+}
+
+// DeleteMediaResponse represents a response to a media deletion request.
+message DeleteMediaResponse {
+  bool success = 1;
+}
+
+// GetAllMediaRequest represents a request to retrieve all media.
+message GetAllMediaRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string memory_id = 3; // Filter by memory ID
+  repeated string types = 4; // Filter by multiple media types (e.g., "image", "video")
+}
+
+// GetAllMediaResponse represents a response containing a list of media.
+message GetAllMediaResponse {
+  repeated Media media = 1;
+  int32 count = 2;
+}
+
+service MediaService {
+  rpc GetMediaById(GetMediaByIdRequest) returns (Media);
+  rpc DeleteMedia(DeleteMediaRequest) returns (DeleteMediaResponse);
+  rpc GetAllMedia(GetAllMediaRequest) returns (GetAllMediaResponse);
+}

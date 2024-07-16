@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "genproto/timeline";
+
+package timeline;
+
+// HistoricalEvent represents a historical event.
+message HistoricalEvent {
+  string id = 1;
+  string title = 2;
+  string date = 3;
+  string category = 4;
+  string description = 5;
+  string source_url = 6;
+  string created_at = 7;
+}
+
+service HistoricalEventService {
+  rpc GetHistoricalEventById (GetHistoricalEventByIdRequest) returns (HistoricalEvent);
+  rpc DeleteHistoricalEvent (DeleteHistoricalEventRequest) returns (DeleteHistoricalEventResponse);
+  rpc GetAllHistoricalEvents (GetAllHistoricalEventsRequest) returns (GetAllHistoricalEventsResponse);
+}
+
+// GetHistoricalEventByIdRequest represents a request to retrieve a historical event by its ID.
+message GetHistoricalEventByIdRequest {
+  string id = 1;
+}
+
+// DeleteHistoricalEventRequest represents a request to delete a historical event by its ID.
+message DeleteHistoricalEventRequest {
+  string id = 1;
+}
+
+// DeleteHistoricalEventResponse represents a response to a historical event deletion request.
+message DeleteHistoricalEventResponse {
+  bool success = 1;
+}
+
+// GetAllHistoricalEventsRequest represents a request to retrieve all historical events.
+message GetAllHistoricalEventsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string title = 3; // Filter by title
+  string description = 4; // Filter by description
+  string category = 5; // Filter by category
+  string start_date = 6; // Filter by start date (inclusive)
+  string end_date = 7; // Filter by end date (inclusive)
+}
+
+// GetAllHistoricalEventsResponse represents a response containing a list of historical events.
+message GetAllHistoricalEventsResponse {
+  repeated HistoricalEvent historical_events = 1;
+  int32 count = 2;
+}

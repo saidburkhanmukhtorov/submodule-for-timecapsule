@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option go_package = "genproto/timeline";
+
+package timeline;
+
+// CustomEvent represents a user-defined event for the timeline.
+message CustomEvent {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  string description = 4;
+  string date = 5;
+  string category = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+service CustomEventService {
+  rpc GetCustomEventById (GetCustomEventByIdRequest) returns (CustomEvent);
+  rpc DeleteCustomEvent (DeleteCustomEventRequest) returns (DeleteCustomEventResponse);
+  rpc GetAllCustomEvents (GetAllCustomEventsRequest) returns (GetAllCustomEventsResponse);
+}
+
+// GetCustomEventByIdRequest represents a request to retrieve a custom event by its ID.
+message GetCustomEventByIdRequest {
+  string id = 1;
+}
+
+// DeleteCustomEventRequest represents a request to delete a custom event by its ID.
+message DeleteCustomEventRequest {
+  string id = 1;
+}
+
+// DeleteCustomEventResponse represents a response to a custom event deletion request.
+message DeleteCustomEventResponse {
+  bool success = 1;
+}
+
+// GetAllCustomEventsRequest represents a request to retrieve all custom events.
+message GetAllCustomEventsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string user_id = 3; // Filter by user ID
+  string title = 4; // Filter by title
+  string description = 5; // Filter by description
+  string category = 6; // Filter by category
+  string start_date = 7; // Filter by start date (inclusive)
+  string end_date = 8; // Filter by end date (inclusive)
+}
+
+// GetAllCustomEventsResponse represents a response containing a list of custom events.
+message GetAllCustomEventsResponse {
+  repeated CustomEvent custom_events = 1;
+  int32 count = 2;
+}
