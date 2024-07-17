@@ -1,9 +1,10 @@
-package memory
+package models
 
 import "time"
 
 // CreateMemoryModel represents the data structure for creating a new memory.
 type CreateMemoryModel struct {
+	ID          string    `json:"id" bson:"_id"`
 	UserID      string    `json:"user_id" bson:"user_id"`
 	Title       string    `json:"title" bson:"title"`
 	Description string    `json:"description" bson:"description"`

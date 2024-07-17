@@ -1,9 +1,10 @@
-package memory
+package models
 
 import "time"
 
 // CreateMediaModel represents the data structure for creating a new media entry.
 type CreateMediaModel struct {
+	ID       string    `json:"id" bson:"_id"`
 	MemoryID string    `json:"memory_id" bson:"memory_id"`
 	Type     string    `json:"type" bson:"type"`
 	URL      string    `json:"url" bson:"url"`

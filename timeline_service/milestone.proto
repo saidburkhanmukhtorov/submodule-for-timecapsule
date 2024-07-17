@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "genproto/timeline";
+
+package timeline;
+
+// Milestone represents a significant event in a user's life.
+message Milestone {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  string date = 4; // Use string for date (YYYY-MM-DD format)
+  string category = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+// GetMilestoneByIdRequest represents a request to retrieve a milestone by its ID.
+message GetMilestoneByIdRequest {
+  string id = 1;
+}
+
+// DeleteMilestoneRequest represents a request to delete a milestone by its ID.
+message DeleteMilestoneRequest {
+  string id = 1;
+}
+
+// DeleteMilestoneResponse represents a response to a milestone deletion request.
+message DeleteMilestoneResponse {
+  bool success = 1;
+}
+
+// GetAllMilestonesRequest represents a request to retrieve all milestones.
+message GetAllMilestonesRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string user_id = 3; // Filter by user ID
+  string title = 4; // Filter by title
+  string category = 5; // Filter by category
+  string start_date = 6; // Filter by start date (inclusive, YYYY-MM-DD)
+  string end_date = 7; // Filter by end date (inclusive, YYYY-MM-DD)
+}
+
+// GetAllMilestonesResponse represents a response containing a list of milestones.
+message GetAllMilestonesResponse {
+  repeated Milestone milestones = 1;
+  int32 count = 2;
+}
+
+service MilestoneService {
+  rpc GetMilestoneById (GetMilestoneByIdRequest) returns (Milestone);
+  rpc DeleteMilestone (DeleteMilestoneRequest) returns (DeleteMilestoneResponse);
+  rpc GetAllMilestones (GetAllMilestonesRequest) returns (GetAllMilestonesResponse);
+}

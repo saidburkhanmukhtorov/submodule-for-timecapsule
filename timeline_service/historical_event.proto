@@ -4,15 +4,16 @@ option go_package = "genproto/timeline";
 
 package timeline;
 
-// HistoricalEvent represents a historical event.
+// HistoricalEvent represents a historical event associated with a user.
 message HistoricalEvent {
   string id = 1;
-  string title = 2;
-  string date = 3;
-  string category = 4;
-  string description = 5;
-  string source_url = 6;
-  string created_at = 7;
+  string user_id = 2; // Added user_id field
+  string title = 3;
+  string date = 4; // Use string for date (YYYY-MM-DD format)
+  string category = 5;
+  string description = 6;
+  string source_url = 7;
+  string created_at = 8;
 }
 
 service HistoricalEventService {

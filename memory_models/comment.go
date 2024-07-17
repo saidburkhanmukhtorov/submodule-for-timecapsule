@@ -1,9 +1,10 @@
-package memory
+package models
 
 import "time"
 
 // CreateCommentModel represents the data structure for creating a new comment.
 type CreateCommentModel struct {
+	ID       string    `json:"id" bson:"_id"`
 	MemoryID string    `json:"memory_id" bson:"memory_id"`
 	UserID   string    `json:"user_id" bson:"user_id"`
 	Content  string    `json:"content" bson:"content"`
